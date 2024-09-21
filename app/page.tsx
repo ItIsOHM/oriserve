@@ -1,101 +1,87 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [query, setQuery] = useState("");
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push(`/search?q=${encodeURIComponent(query)}`);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-pink-500 via-red-500 to-orange-500">
+      <div className="bg-white py-8">
+        <div className="container mx-auto">
+          <div className="max-w-3xl mx-auto flex justify-between items-center">
+            <Image src="/npm-logo.svg" alt="npm" width={64} height={64} />
+            <form onSubmit={handleSearch} className="flex">
+              <div className="relative flex-grow">
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search packages"
+                  className="w-auto text-primary px-10 py-2 bg-slate-100 border border-gray-500 focus:outline-none"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5" />
+              </div>
+              {/* <button
+                type="submit"
+                className="px-6 py-2 bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500"
+              >
+                Search
+              </button> */}
+              <Button variant={"default"} className="text-md h-25">
+                Search
+              </Button>
+            </form>
+            <div className="flex items-center space-x-4">
+              <Button variant={"outline"}>Sign Up</Button>
+              <Button variant={"ghost"}>Sign In</Button>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-3xl mx-auto text-center text-white pt-20">
+          <h1 className="text-6xl font-bold mb-6">Build amazing things</h1>
+          <p className="text-xl mb-8">
+            We&apos;re GitHub, the company behind the npm Registry and npm CLI.
+            We offer those to the community for free, but our day job is
+            building and selling useful tools for developers like you.
+          </p>
+          <h2 className="text-4xl font-bold mb-6">
+            Take your JavaScript development up a notch
+          </h2>
+          <p className="text-xl mb-8">
+            Get started today for free, or step up to npm Pro to enjoy a premium
+            JavaScript development experience, with features like private
+            packages.
+          </p>
+          <div className="flex justify-center space-x-4">
+            <Link
+              href="/signup"
+              className="bg-yellow-400 text-black px-6 py-3 rounded-md font-semibold hover:bg-yellow-300 transition duration-300"
+            >
+              Sign up for free
+            </Link>
+            <Link
+              href="/pro"
+              className="bg-white text-red-500 px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition duration-300"
+            >
+              Learn about Pro
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
